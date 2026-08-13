@@ -32,6 +32,7 @@
   const hallPeek = document.getElementById('hall-peek');
   const alertBanner = document.getElementById('alert-banner');
   const clockTime = document.getElementById('clock-time');
+  const powerBarFill = document.getElementById('power-bar-fill');
 
   [subjectCorridor, subjectHall, doorPeek, hallPeek].forEach(el=>{
     el.style.backgroundImage = `url(${BARCHUK_IMG})`;
@@ -87,6 +88,10 @@
 
   // ---------- game state ----------
   const NIGHT_LENGTH = 180; // seconds to survive one full shift
+  const DOOR_GRACE = 3;      // fixed 3-second window to close the door once Barchuk arrives
+  const POWER_MAX = 100;
+  const POWER_DRAIN_PER_SEC = 4.5;  // door closed: full tank lasts ~22s of continuous closing
+  const POWER_REGEN_PER_SEC = 1.4;  // door open: full regen takes ~70s
   let elapsed = 0;
   let doorClosed = false;
   let monitorOpen = false;
@@ -95,6 +100,8 @@
   let stateTimer = 0;
   let corridorThreshold = 20;
   let hallThreshold = 8;
+  let barchukSpeedTier = 'fast'; // 'fast' or 'veryfast', re-rolled each time he enters the corridor
+  let power = POWER_MAX;
   let loopHandle = null;
   let running = false;
   let lastFootstep = -1;
@@ -109,10 +116,27 @@
 
   function randRange(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
+  // Barchuk's corridor-crossing time: randomly "fast" or "very fast" each cycle,
+  // both getting a little quicker as the night goes on.
+  function pickCorridorThreshold(progress){
+    const veryFast = Math.random() < 0.4;
+    let base, minVal;
+    if(veryFast){
+      base = randRange(6,10) - Math.floor(progress*3);
+      minVal = 4;
+    } else {
+      base = randRange(13,18) - Math.floor(progress*5);
+      minVal = 9;
+    }
+    barchukSpeedTier = veryFast ? 'veryfast' : 'fast';
+    return Math.max(minVal, base);
+  }
+
   function resetGame(){
     elapsed = 0; doorClosed = false; monitorOpen = false; currentCam='hall';
     barchukState='hall'; stateTimer=0; corridorThreshold=20; hallThreshold=randRange(5,11);
-    updateDoorUI(); updateCamViews(); monitor.classList.remove('active');
+    power = POWER_MAX; barchukSpeedTier='fast';
+    updateDoorUI(); updateCamViews(); updatePowerUI(); monitor.classList.remove('active');
     alertBanner.classList.remove('show');
     clockTime.textContent = '12:00 AM';
     selectCam('hall');
@@ -132,8 +156,30 @@
     }
   }
 
+  function updatePowerUI(){
+    const pct = Math.max(0, Math.min(100, power));
+    powerBarFill.style.width = pct + '%';
+    powerBarFill.classList.toggle('low', pct <= 25);
+  }
+
+  function doorLocked(){
+    return monitorOpen || power <= 0;
+  }
+
+  function refreshDoorLockUI(){
+    hudDoor.classList.toggle('locked', doorLocked());
+  }
+
+  function denyDoorAttempt(){
+    hudDoor.classList.remove('shake');
+    void hudDoor.offsetWidth; // restart animation
+    hudDoor.classList.add('shake');
+    beep(140, 0.08, 'square', 0.04);
+  }
+
   function toggleDoor(){
     if(!running) return;
+    if(doorLocked()){ denyDoorAttempt(); return; }
     doorClosed = !doorClosed;
     doorClank();
     updateDoorUI();
@@ -148,12 +194,14 @@
     monitorOpen = true;
     monitor.classList.add('active');
     hudCam.classList.add('active-state');
+    refreshDoorLockUI();
   }
   function closeMonitor(){
     if(!monitorOpen) return;
     monitorOpen = false;
     monitor.classList.remove('active');
     hudCam.classList.remove('active-state');
+    refreshDoorLockUI();
   }
   function toggleMonitor(){
     if(!running) return;
@@ -204,26 +252,40 @@
     }
 
     const progress = elapsed/NIGHT_LENGTH;
-    const doorGrace = Math.max(1.6, 3.2 - progress*1.2);
+
+    // ---- power drains while the door is held closed, regens while open ----
+    if(doorClosed){
+      power = Math.max(0, power - POWER_DRAIN_PER_SEC);
+      if(power <= 0){
+        // blackout: the door blows back open, whether Barchuk is coming or not
+        doorClosed = false;
+        updateDoorUI();
+        doorClank();
+      }
+    } else {
+      power = Math.min(POWER_MAX, power + POWER_REGEN_PER_SEC);
+    }
+    updatePowerUI();
+    refreshDoorLockUI();
 
     stateTimer += 1;
 
     if(barchukState==='hall'){
       if(stateTimer >= hallThreshold){
         barchukState='corridor'; stateTimer=0;
-        corridorThreshold = Math.max(12, 20 - Math.floor(progress*8));
+        corridorThreshold = pickCorridorThreshold(progress);
       }
     } else if(barchukState==='corridor'){
-      if(stateTimer % 2 === 0) footstep();
+      const footstepInterval = barchukSpeedTier==='veryfast' ? 1 : 2;
+      if(stateTimer % footstepInterval === 0) footstep();
       if(stateTimer >= corridorThreshold){
         barchukState='door'; stateTimer=0;
-        window.__doorGrace = doorGrace;
       }
     } else if(barchukState==='door'){
       if(doorClosed){
         barchukState='retreating'; stateTimer=0;
       } else {
-        if(stateTimer >= (window.__doorGrace||3)){
+        if(stateTimer >= DOOR_GRACE){
           triggerJumpscare();
           return;
         }

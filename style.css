@@ -126,6 +126,17 @@ html,body{
 }
 .clock-label{font-size:9px; letter-spacing:3px; color:var(--dough); text-align:center; opacity:.7;}
 
+.power-meter{position:absolute; top:3%; left:3%; width:160px;}
+.power-label{font-size:9px; letter-spacing:2px; color:var(--dough); margin-bottom:4px; opacity:.8;}
+.power-bar-track{width:100%; height:14px; border:1px solid var(--ember-dim); border-radius:2px; background:rgba(0,0,0,0.5); overflow:hidden;}
+.power-bar-fill{height:100%; width:100%; background:linear-gradient(90deg, var(--ember-dim), var(--ember)); transition:width .3s linear, background .3s ease;}
+.power-bar-fill.low{background:linear-gradient(90deg, var(--blood), var(--blood-bright)); animation:powerPulse .6s infinite alternate;}
+@keyframes powerPulse{ from{opacity:.6;} to{opacity:1;} }
+
+.hud-btn.doorlock.locked{opacity:0.35; cursor:not-allowed; filter:grayscale(0.6);}
+.hud-btn.doorlock.shake{animation:doorShake .25s;}
+@keyframes doorShake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-4px);} 75%{transform:translateX(4px);} }
+
 /* HUD sits ABOVE the monitor overlay so buttons stay clickable while camera view is open */
 .hud{position:absolute; bottom:3%; left:0; right:0; display:flex; justify-content:center; gap:16px; z-index:60;}
 .hud-btn{
