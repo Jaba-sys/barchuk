@@ -38,3 +38,10 @@
 @media (max-width:560px){
   .achievements-grid{grid-template-columns:1fr 1fr;}
 }
+
+.cheat-link-row{margin-top:22px;}
+.cheat-link{
+  font-size:9px; letter-spacing:2px; color:var(--dough); opacity:0.4;
+  text-decoration:none; transition:opacity .2s ease;
+}
+.cheat-link:hover{opacity:0.9; color:var(--blood-bright);}
