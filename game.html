@@ -27,6 +27,13 @@
         <div class="power-drain-note">ДВЕРЬ И ВЕНТИЛЯЦИЯ ТРАТЯТ ГОРАЗДО БОЛЬШЕ КАМЕР. ОБНУЛИТСЯ — НЕ ВОССТАНОВИТСЯ.</div>
       </div>
 
+      <div class="godmode-badge hidden" id="godmode-badge">⚡ РЕЖИМ БОГА АКТИВЕН</div>
+
+      <div class="ninja-shadow hidden" id="ninja-shadow">
+        <span class="ninja-emoji">🥷</span>
+        <span class="ninja-hint hidden" id="ninja-hint">БЫСТРО НАЖМИ 3 РАЗА!</span>
+      </div>
+
       <div class="door" id="door">
         <div class="door-window" id="door-window">
           <div class="door-peek" id="door-peek"></div>
@@ -118,8 +125,8 @@
 
   <!-- GAME OVER -->
   <div id="screen-gameover" class="screen">
-    <h1 class="end-title">ТЫ НЕ ПЕРЕЖИЛ СМЕНУ</h1>
-    <p class="end-sub">БАРЧУК БЕКЕРИ ЗАБРАЛ ЕЩЁ ОДНОГО ОХРАННИКА</p>
+    <h1 class="end-title" id="gameover-title">ТЫ НЕ ПЕРЕЖИЛ СМЕНУ</h1>
+    <p class="end-sub" id="gameover-sub">БАРЧУК БЕКЕРИ ЗАБРАЛ ЕЩЁ ОДНОГО ОХРАННИКА</p>
     <button class="btn danger" id="btn-retry">Попробовать снова</button>
     <button class="btn" id="btn-menu">В меню</button>
   </div>
@@ -127,6 +134,7 @@
 </div>
 <script src="js/audio.js"></script>
 <script src="js/achievements.js"></script>
+<script src="js/cheats.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

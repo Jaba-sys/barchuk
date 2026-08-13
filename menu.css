@@ -1,0 +1,47 @@
+#screen-menu{
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255,106,43,0.10), transparent 60%),
+    linear-gradient(180deg, #150b06 0%, #0b0705 100%);
+  text-align:center; padding:20px; overflow-y:auto;
+}
+.title-wrap{position:relative; z-index:2; max-width:640px;}
+.title-main{
+  font-family:var(--font-display); font-weight:700; letter-spacing:4px;
+  font-size:clamp(30px,7vw,58px); color:var(--flour); margin:0;
+  text-shadow: 0 0 18px var(--ember-dim), 0 0 40px rgba(255,106,43,0.3);
+}
+.title-sub{
+  font-family:var(--font-mono); color:var(--ember); letter-spacing:6px;
+  font-size:clamp(11px,2.4vw,15px); margin-top:6px; opacity:0.85;
+}
+.menu-flavor{max-width:480px; color:var(--dough); font-size:13px; line-height:1.7; margin:0 auto 26px; opacity:0.85;}
+
+.howto-box{max-width:520px; padding:20px; text-align:left; margin:0 auto;}
+.howto-box h2{color:var(--ember); letter-spacing:2px;}
+.howto-box p{color:var(--dough); font-size:13px; line-height:1.85;}
+.howto-box b{color:var(--flour);}
+
+/* ---------- achievements gallery ---------- */
+.achievements-section{margin-top:18px; max-width:560px;}
+.achievements-title{font-size:11px; letter-spacing:3px; color:var(--dough); opacity:0.8; margin-bottom:10px;}
+.achievements-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:10px;}
+.achv-card{
+  border:1px solid var(--ember-dim); border-radius:3px; padding:10px;
+  background:rgba(36,18,9,0.5); text-align:left;
+}
+.achv-card.locked{opacity:0.35; filter:grayscale(0.7);}
+.achv-card.earned{border-color:var(--ember); box-shadow:0 0 12px rgba(255,106,43,0.25);}
+.achv-name{font-size:11px; letter-spacing:1px; color:var(--flour); margin-bottom:4px;}
+.achv-card.locked .achv-name{color:var(--dough);}
+.achv-desc{font-size:9px; color:var(--dough); line-height:1.5;}
+
+@media (max-width:560px){
+  .achievements-grid{grid-template-columns:1fr 1fr;}
+}
+
+.cheat-link-row{margin-top:22px;}
+.cheat-link{
+  font-size:9px; letter-spacing:2px; color:var(--dough); opacity:0.4;
+  text-decoration:none; transition:opacity .2s ease;
+}
+.cheat-link:hover{opacity:0.9; color:var(--blood-bright);}

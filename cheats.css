@@ -1,0 +1,36 @@
+#screen-cheats{
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(226,59,59,0.10), transparent 60%),
+    linear-gradient(180deg, #120806 0%, #0b0705 100%);
+  text-align:center; padding:24px; overflow-y:auto;
+}
+.cheats-title{
+  font-family:var(--font-display); font-size:clamp(26px,6vw,44px); letter-spacing:3px;
+  color:var(--blood-bright); margin:0 0 6px; text-shadow:0 0 20px rgba(226,59,59,0.4);
+}
+.cheats-sub{font-size:11px; letter-spacing:2px; color:var(--dough); opacity:0.8; margin-bottom:30px;}
+
+.cheat-list{max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:14px;}
+.cheat-card{
+  border:1px solid var(--ember-dim); border-radius:4px; padding:16px 18px;
+  background:rgba(36,18,9,0.55); text-align:left; display:flex; align-items:center; justify-content:space-between; gap:14px;
+}
+.cheat-info{flex:1;}
+.cheat-name{font-size:13px; letter-spacing:1px; color:var(--flour); margin-bottom:4px;}
+.cheat-desc{font-size:10px; color:var(--dough); line-height:1.5;}
+.cheat-btn{
+  font-family:var(--font-mono); background:var(--wood-mid); color:var(--flour);
+  border:1px solid var(--blood-bright); padding:10px 16px; font-size:11px; letter-spacing:1px;
+  cursor:pointer; border-radius:2px; text-transform:uppercase; white-space:nowrap; flex-shrink:0;
+}
+.cheat-btn:hover{background:var(--blood); box-shadow:0 0 14px rgba(226,59,59,0.5);}
+.cheat-btn.toggle-on{background:var(--amber); color:#1a1206; border-color:var(--amber);}
+.cheat-btn.danger-reset{border-color:var(--dough);}
+
+.cheat-status{max-width:520px; margin:18px auto 0; font-size:10px; letter-spacing:1px; color:var(--ember); min-height:14px;}
+
+.cheats-back{margin-top:30px;}
+
+.cheats-warning{
+  max-width:520px; margin:0 auto 24px; font-size:10px; color:var(--dough); opacity:0.6; line-height:1.6;
+}
