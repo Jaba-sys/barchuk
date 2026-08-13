@@ -4,144 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>БАРЧУК БЕКЕРИ</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
 <div id="app">
 
-  <!-- MENU -->
   <div id="screen-menu" class="screen active">
     <div class="flour-drift"></div>
-    <div class="title-wrap">
+
+    <div class="title-wrap" id="view-main">
       <p class="title-sub">НОЧНАЯ СМЕНА В ПЕКАРНЕ</p>
       <h1 class="title-main">БАРЧУК БЕКЕРИ</h1>
       <div class="crack"></div>
       <p class="menu-flavor">
         Ты — новый охранник ночной пекарни. В зале, среди остывших печей, стоит ОН — Барчук.
         Следи за камерами, вовремя закрывай дверь кабинета и доживи до утра.
-        Если Барчук добежит до двери, пока она открыта — тебе конец.
+        И камеры, и закрытая дверь тратят энергию генератора — на всё её не хватит,
+        трать с умом.
       </p>
       <button class="btn big" id="btn-start">Начать смену</button>
       <div><button class="btn" id="btn-howto">Как играть</button></div>
-    </div>
-  </div>
 
-  <!-- HOW TO -->
-  <div id="screen-howto" class="screen">
-    <div style="max-width:520px; padding:20px; text-align:left;">
-      <h2 style="color:var(--ember); letter-spacing:2px;">ИНСТРУКЦИЯ</h2>
-      <p style="color:var(--dough); font-size:13px; line-height:1.8;">
-        • Кнопка «КАМЕРЫ» открывает монитор с двумя камерами: КОРИДОР и ЗАЛ.<br>
-        • Пока открыт монитор камер, дверь закрыть <b>нельзя</b> — сначала выйди из камер.<br>
-        • В ЗАЛЕ обычно стоит Барчук. Через случайное время он перебегает в КОРИДОР —
-        и бежит к тебе то быстро, то очень быстро, каждый раз по-разному.<br>
-        • Как только он у двери — на закрытие двери всего <b>3 секунды</b>.<br>
-        • Закрытая дверь тратит энергию. Энергии хватает только на нужные закрытия —
-        если держать дверь закрытой без остановки, энергия закончится, дверь распахнётся
-        сама, и следующая атака станет смертельной.<br>
-        • Открытая дверь энергию восстанавливает — не закрывай её просто так, только когда
-        Барчук реально у двери.<br>
-        • Продержись всю ночь, чтобы выжить.
+      <div class="achievements-section">
+        <div class="achievements-title">ДОСТИЖЕНИЯ</div>
+        <div class="achievements-grid" id="achv-grid"></div>
+      </div>
+    </div>
+
+    <div class="howto-box hidden" id="view-howto">
+      <h2>ИНСТРУКЦИЯ</h2>
+      <p>
+        • Кнопка «КАМЕРЫ» открывает монитор с двумя камерами: КОРИДОР и ЗАЛ.
+        Просмотр камер тоже расходует энергию, но заметно медленнее двери и вентиляции.<br>
+        • Пока открыт монитор камер, дверь, вентиляцию и фонарик использовать <b>нельзя</b> —
+        сначала выйди из камер.<br>
+        • В ЗАЛЕ обычно стоит Барчук. Через случайное время он выбирает путь: либо
+        бежит по КОРИДОРУ к двери (то быстро, то очень быстро — по камере коридора
+        видно, как он приближается), либо лезет в ВЕНТИЛЯЦИЮ — и тогда пропадает
+        с обеих камер надолго, пока не появится прямо в решётке в кабинете.<br>
+        • У двери реакции почти нет — если он уже стоит там, а дверь не закрыта,
+        проигрыш почти мгновенный. Дверь нужно закрывать <b>заранее</b>, ориентируясь
+        по камере коридора, а не ждать, пока он придёт.<br>
+        • Чтобы увидеть, стоит ли он прямо у двери, — держи кнопку «Фонарик»:
+        только тогда в окошке двери видно, там ли он.<br>
+        • С вентиляцией наоборот: там честные <b>3 секунды</b> на закрытие после
+        того, как он появится в решётке.<br>
+        • Закрытые дверь и вентиляция тратят энергию намного быстрее камер, и
+        Барчук ещё постоит там несколько секунд, прежде чем уйти — всё это время
+        преграда должна оставаться закрытой.<br>
+        • Если энергия закончится полностью — она <b>больше не восстановится</b>
+        до конца смены, а дверь и вентиляция станут недоступны насовсем.<br>
+        • Продержись всю ночь, чтобы выжить — и получить достижения.
       </p>
       <button class="btn" id="btn-back-menu">Назад</button>
     </div>
   </div>
 
-  <!-- GAME -->
-  <div id="screen-game" class="screen">
-    <div id="office">
-      <div class="floor"></div>
-      <div class="desk-shadow"></div>
-      <div class="clock">
-        <div id="clock-time">12:00 AM</div>
-        <div class="clock-label">ДО РАССВЕТА</div>
-      </div>
-
-      <div class="power-meter">
-        <div class="power-label">ЭНЕРГИЯ</div>
-        <div class="power-bar-track"><div class="power-bar-fill" id="power-bar-fill"></div></div>
-      </div>
-
-      <div class="door" id="door">
-        <div class="door-window" id="door-window">
-          <div class="door-peek" id="door-peek"></div>
-        </div>
-        <div class="door-btn" id="door-btn">Дверь: открыта</div>
-      </div>
-
-      <div class="hall-glimpse">
-        <div class="hall-glimpse-label">ОКНО В ЗАЛ</div>
-        <div class="peek" id="hall-peek"></div>
-      </div>
-
-      <div class="alert-banner" id="alert-banner">БАРЧУК У ДВЕРИ! ЗАКРОЙ ЕЁ!</div>
-    </div>
-
-    <div class="hud">
-      <div class="hud-btn doorlock" id="hud-door">🚪 Дверь</div>
-      <div class="hud-btn" id="hud-cam">📷 Камеры</div>
-    </div>
-
-    <!-- MONITOR OVERLAY -->
-    <div id="monitor">
-      <button class="monitor-close" id="monitor-close">✕ Выйти</button>
-      <div class="crt">
-        <div class="cam-view cam-corridor hidden" id="cam-corridor">
-          <div class="corridor-tunnel">
-            <div class="corridor-ceiling"></div>
-            <div class="corridor-floor"></div>
-            <div class="corridor-wall-l"></div>
-            <div class="corridor-wall-r"></div>
-            <div class="corridor-doorframe"></div>
-            <div class="corridor-vanish"></div>
-            <div class="corridor-light l1"></div>
-            <div class="corridor-light l2"></div>
-            <div class="corridor-light l3"></div>
-            <div class="corridor-light l4"></div>
-          </div>
-          <div class="cam-label">КАМ. 01 — КОРИДОР</div>
-          <div class="cam-rec">REC</div>
-          <div class="cam-subject" id="subject-corridor"></div>
-          <div class="cam-noise"></div>
-        </div>
-        <div class="cam-view cam-hall" id="cam-hall">
-          <div class="cam-label">КАМ. 02 — ЗАЛ</div>
-          <div class="cam-rec">REC</div>
-          <div class="cam-subject" id="subject-hall"></div>
-          <div class="cam-noise"></div>
-        </div>
-      </div>
-      <div class="cam-tabs">
-        <div class="cam-tab" id="tab-corridor">Коридор</div>
-        <div class="cam-tab" id="tab-hall">Зал</div>
-      </div>
-      <div class="monitor-exit">нажми «✕ Выйти», «Камеры» ещё раз, или клавишу C</div>
-    </div>
-  </div>
-
-  <!-- JUMPSCARE -->
-  <div id="screen-jumpscare" class="screen">
-    <img id="jumpscare-img" src="assets/barchuk.png" alt="">
-    <div class="flash-red"></div>
-  </div>
-
-  <!-- GAME OVER -->
-  <div id="screen-gameover" class="screen">
-    <h1 class="end-title">ТЫ НЕ ПЕРЕЖИЛ СМЕНУ</h1>
-    <p class="end-sub">БАРЧУК БЕКЕРИ ЗАБРАЛ ЕЩЁ ОДНОГО ОХРАННИКА</p>
-    <button class="btn danger" id="btn-retry-1">Попробовать снова</button>
-    <button class="btn" id="btn-menu-1">В меню</button>
-  </div>
-
-  <!-- WIN -->
-  <div id="screen-win" class="screen">
-    <h1 class="end-title">6:00 — СМЕНА ОКОНЧЕНА</h1>
-    <p class="end-sub">ТЫ ПЕРЕЖИЛ НОЧЬ В БАРЧУК БЕКЕРИ</p>
-    <button class="btn big" id="btn-retry-2">Ещё одна смена</button>
-    <button class="btn" id="btn-menu-2">В меню</button>
-  </div>
-
 </div>
-<script src="script.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/menu.js"></script>
 </body>
 </html>

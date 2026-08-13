@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>БАРЧУК БЕКЕРИ — 6:00 AM</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ending.css">
+</head>
+<body>
+<div id="app">
+  <div id="screen-ending" class="screen active">
+    <div class="ending-time">6:00 AM</div>
+    <h1 class="ending-title">СМЕНА ОКОНЧЕНА</h1>
+
+    <div class="ending-stage">
+      <div class="ending-floor-glow"></div>
+      <img class="ending-barchuk" id="ending-barchuk" src="assets/barchuk.png" alt="">
+    </div>
+
+    <div class="ending-monologue" id="ending-monologue"></div>
+
+    <div class="ending-achievements" id="ending-achievements">
+      <div class="ending-achievements-title">ПОЛУЧЕНО ЗА ЭТУ СМЕНУ</div>
+      <div class="ending-badge-row" id="ending-badge-row"></div>
+    </div>
+
+    <div class="ending-actions" id="ending-actions">
+      <button class="btn big" id="btn-play-again">Ещё одна смена</button>
+      <div><button class="btn" id="btn-to-menu">В меню</button></div>
+    </div>
+  </div>
+</div>
+<script src="js/audio.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/ending.js"></script>
+</body>
+</html>

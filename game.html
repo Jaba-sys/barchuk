@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>БАРЧУК БЕКЕРИ — Смена</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- GAME -->
+  <div id="screen-game" class="screen active">
+    <div id="office">
+      <div class="floor"></div>
+      <div class="desk-shadow"></div>
+
+      <div class="clock">
+        <div id="clock-time">12:00 AM</div>
+        <div class="clock-label">ДО РАССВЕТА</div>
+      </div>
+
+      <div class="power-meter">
+        <div class="power-label">ЭНЕРГИЯ</div>
+        <div class="power-bar-track"><div class="power-bar-fill" id="power-bar-fill"></div></div>
+        <div class="power-drain-note">ДВЕРЬ И ВЕНТИЛЯЦИЯ ТРАТЯТ ГОРАЗДО БОЛЬШЕ КАМЕР. ОБНУЛИТСЯ — НЕ ВОССТАНОВИТСЯ.</div>
+      </div>
+
+      <div class="door" id="door">
+        <div class="door-window" id="door-window">
+          <div class="door-peek" id="door-peek"></div>
+          <div class="door-flash-beam" id="door-flash-beam"></div>
+        </div>
+        <div class="door-btn" id="door-btn">Дверь: открыта</div>
+      </div>
+
+      <div class="vent" id="vent">
+        <div class="vent-grate" id="vent-grate">
+          <div class="vent-peek" id="vent-peek"></div>
+          <div class="vent-slats">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="vent-shutter"></div>
+        </div>
+        <div class="vent-btn" id="vent-btn">Вентиляция: открыта</div>
+      </div>
+
+      <div class="desk">
+        <div class="desk-console">
+          <div class="console-screen console-screen-l">
+            <div class="console-screen-label">K1 КОРИДОР</div>
+            <div class="console-screen-static"></div>
+          </div>
+          <div class="console-screen console-screen-r">
+            <div class="console-screen-label">K2 ЗАЛ</div>
+            <div class="console-screen-static"></div>
+          </div>
+          <div class="console-light"></div>
+        </div>
+        <div class="desk-keyboard">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="alert-banner" id="alert-banner">БАРЧУК У ДВЕРИ! ЗАКРОЙ ЕЁ!</div>
+    </div>
+
+    <div class="hud">
+      <div class="hud-btn doorlock" id="hud-door">🚪 Дверь</div>
+      <div class="hud-btn doorlock" id="hud-vent">🌀 Вентиляция</div>
+      <div class="hud-btn flashlight" id="hud-flashlight">🔦 Фонарик (держать)</div>
+      <div class="hud-btn" id="hud-cam">📷 Камеры</div>
+    </div>
+
+    <!-- MONITOR OVERLAY -->
+    <div id="monitor">
+      <button class="monitor-close" id="monitor-close">✕ Выйти</button>
+      <div class="crt">
+        <div class="cam-view cam-corridor hidden" id="cam-corridor">
+          <div class="corridor-tunnel">
+            <div class="corridor-ceiling"></div>
+            <div class="corridor-floor"></div>
+            <div class="corridor-wall-l"></div>
+            <div class="corridor-wall-r"></div>
+            <div class="corridor-doorframe"></div>
+            <div class="corridor-vanish"></div>
+            <div class="corridor-light l1"></div>
+            <div class="corridor-light l2"></div>
+            <div class="corridor-light l3"></div>
+            <div class="corridor-light l4"></div>
+          </div>
+          <div class="cam-label">КАМ. 01 — КОРИДОР</div>
+          <div class="cam-rec">REC</div>
+          <div class="cam-subject" id="subject-corridor"></div>
+          <div class="cam-noise"></div>
+        </div>
+        <div class="cam-view cam-hall" id="cam-hall">
+          <div class="cam-label">КАМ. 02 — ЗАЛ</div>
+          <div class="cam-rec">REC</div>
+          <div class="cam-subject" id="subject-hall"></div>
+          <div class="cam-noise"></div>
+        </div>
+      </div>
+      <div class="cam-tabs">
+        <div class="cam-tab" id="tab-corridor">Коридор</div>
+        <div class="cam-tab" id="tab-hall">Зал</div>
+      </div>
+      <div class="monitor-exit">камеры тоже тратят энергию — не держи их открытыми без нужды</div>
+    </div>
+  </div>
+
+  <!-- JUMPSCARE -->
+  <div id="screen-jumpscare" class="screen">
+    <img id="jumpscare-img" src="assets/barchuk.png" alt="">
+    <div class="flash-red"></div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="screen-gameover" class="screen">
+    <h1 class="end-title">ТЫ НЕ ПЕРЕЖИЛ СМЕНУ</h1>
+    <p class="end-sub">БАРЧУК БЕКЕРИ ЗАБРАЛ ЕЩЁ ОДНОГО ОХРАННИКА</p>
+    <button class="btn danger" id="btn-retry">Попробовать снова</button>
+    <button class="btn" id="btn-menu">В меню</button>
+  </div>
+
+</div>
+<script src="js/audio.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
